@@ -8,28 +8,32 @@ const run = async () => {
 
   // YOUR bluesky handle
   // Ex: user.bsky.social
-  const handle = ''
+  const handle = 'h3y6e.bsky.social'
 
   // YOUR bluesky password, or preferably an App Password (found in your client settings)
   // Ex: abcd-1234-efgh-5678
-  const password = ''
+  if (!process.env.FEEDGEN_PUBLISH_APP_PASSWORD) {
+    throw new Error('Please provide an app password in the .env file')
+  }
+  const password = process.env.FEEDGEN_PUBLISH_APP_PASSWORD
 
   // A short name for the record that will show in urls
-  // Lowercase with no spaces.
+  // Lowercase with no spaces, max 15 chars
   // Ex: whats-hot
-  const recordName = ''
+  const recordName = 'camphor-members'
 
   // A display name for your feed
   // Ex: What's Hot
-  const displayName = ''
+  const displayName = 'CAMPHOR- Members'
 
   // (Optional) A description of your feed
   // Ex: Top trending content from the whole network
-  const description = ''
+  const description =
+    "CAMPHOR- (https://camph.net) members' posts. Source: https://github.com/h3y6e/feed-generator"
 
   // (Optional) The path to an image to be used as your feed's avatar
   // Ex: ~/path/to/avatar.jpeg
-  const avatar: string = ''
+  const avatar: string = 'avatar.png'
 
   // -------------------------------------
   // NO NEED TO TOUCH ANYTHING BELOW HERE
