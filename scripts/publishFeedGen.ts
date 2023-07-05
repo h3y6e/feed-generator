@@ -29,7 +29,7 @@ const run = async () => {
   // (Optional) A description of your feed
   // Ex: Top trending content from the whole network
   const description =
-    "CAMPHOR- (https://camph.net) members' posts. Source: https://github.com/h3y6e/feed-generator"
+    'Posts from CAMPHOR- (https://camph.net) members. Source: https://github.com/h3y6e/feed-generator'
 
   // (Optional) The path to an image to be used as your feed's avatar
   // Ex: ~/path/to/avatar.jpeg
