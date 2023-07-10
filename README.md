@@ -1,5 +1,21 @@
 # ATProto Feed Generator
 
+[![Fly Deploy](https://github.com/h3y6e/feed-generator/actions/workflows/deploy.yaml/badge.svg)](https://github.com/h3y6e/feed-generator/actions/workflows/deploy.yaml)
+[![camphor-members](https://img.shields.io/badge/camphor--members-feed-blue)](https://feed-generator.fly.dev/xrpc/app.bsky.feed.getFeedSkeleton%253Ffeed=at://did:plc:nbyzym7vdf3czj7rn3tt5vtq/app.bsky.feed.generator/camphor-members)
+
+Edit `src/members.ts` to change the users that appear in the feed.
+
+## Dev
+
+```bash
+asdf install
+corepack enable yarn
+asdf reshim
+yarn
+```
+
+---
+
 This is a starter kit for creating ATProto Feed Generators. It's not feature complete, but should give you a good starting ground off of which to build and deploy a feed.
 
 ## Overview
