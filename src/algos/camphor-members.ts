@@ -2,6 +2,15 @@ import { InvalidRequestError } from '@atproto/xrpc-server'
 import { QueryParams } from '../lexicon/types/app/bsky/feed/getFeedSkeleton'
 import { AppContext } from '../config'
 
+type SkeletonItem = {
+  post: string
+  reason?: ReasonRepost
+}
+
+type ReasonRepost = {
+  $type: 'app.bsky.feed.defs#skeletonReasonRepost'
+  repost: string // repost URI
+}
 // max 15 chars
 const shortname = 'camphor-members'
 
@@ -24,11 +33,19 @@ const handler = async (ctx: AppContext, params: QueryParams) => {
       .orWhere((qb) => qb.where('post.indexedAt', '=', timeStr))
       .where('post.cid', '<', cid)
   }
-  const res = await builder.execute()
 
-  const feed = res.map((row) => ({
-    post: row.uri,
-  }))
+  const res = await builder.execute()
+  const feed = res.map((row) => {
+    const feedItem: SkeletonItem = { post: row.uri }
+
+    if (row.repostUri !== null) {
+      feedItem.reason = {
+        $type: 'app.bsky.feed.defs#skeletonReasonRepost',
+        repost: row.repostUri,
+      }
+    }
+    return feedItem
+  })
 
   let cursor: string | undefined
   const last = res.at(-1)
@@ -36,10 +53,7 @@ const handler = async (ctx: AppContext, params: QueryParams) => {
     cursor = `${new Date(last.indexedAt).getTime()}::${last.cid}`
   }
 
-  return {
-    cursor,
-    feed,
-  }
+  return { cursor, feed }
 }
 
 export { shortname, handler }

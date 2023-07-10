@@ -14,18 +14,12 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     if (!isCommit(evt)) return
     const ops = await getOpsByType(evt)
 
-    // for (const post of ops.posts.creates) {
-    //   if (isMember(post.author)) console.log(post.author, post.record.text)
-    // }
-
-    const postsToDelete = ops.posts.deletes.map((del) => del.uri)
+    // posts
     const postsToCreate = ops.posts.creates
       .filter((create) => {
-        // only members' posts
         return isMember(create.author)
       })
       .map((create) => {
-        // map posts to a db row
         return {
           uri: create.uri,
           cid: create.cid,
@@ -34,18 +28,48 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
           indexedAt: new Date().toISOString(),
         }
       })
+    if (postsToCreate.length > 0) {
+      await this.db
+        .insertInto('post')
+        .values(postsToCreate)
+        .onConflict((oc) => oc.doNothing())
+        .execute()
+    }
 
+    const postsToDelete = ops.posts.deletes.map((del) => del.uri)
     if (postsToDelete.length > 0) {
       await this.db
         .deleteFrom('post')
         .where('uri', 'in', postsToDelete)
         .execute()
     }
-    if (postsToCreate.length > 0) {
+
+    // reposts
+    const repostsToCreate = ops.reposts.creates
+      .filter((create) => {
+        return isMember(create.author)
+      })
+      .map((create) => {
+        return {
+          uri: create.record.subject.uri,
+          repostUri: create.uri,
+          cid: create.cid,
+          indexedAt: new Date().toISOString(),
+        }
+      })
+    if (repostsToCreate.length > 0) {
       await this.db
         .insertInto('post')
-        .values(postsToCreate)
+        .values(repostsToCreate)
         .onConflict((oc) => oc.doNothing())
+        .execute()
+    }
+
+    const repostsToDelete = ops.reposts.deletes.map((del) => del.uri)
+    if (repostsToDelete.length > 0) {
+      await this.db
+        .deleteFrom('post')
+        .where('repostUri', 'in', repostsToDelete)
         .execute()
     }
   }

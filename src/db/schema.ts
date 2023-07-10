@@ -5,6 +5,7 @@ export type DatabaseSchema = {
 
 export type Post = {
   uri: string
+  repostUri: string | null
   cid: string
   replyParent: string | null
   replyRoot: string | null
