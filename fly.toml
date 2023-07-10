@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for feed-generator on 2023-07-07T16:12:23+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "feed-generator"
+primary_region = "nrt"
+
+[env]
+  FEEDGEN_PORT=3000
+  FEEDGEN_LISTENHOST="0.0.0.0"
+  FEEDGEN_SQLITE_LOCATION="/data/db.sqlite3"
+  FEEDGEN_SUBSCRIPTION_ENDPOINT="wss://bsky.social"
+  FEEDGEN_HOSTNAME="feed-generator.fly.dev"
+  FEEDGEN_PUBLISHER_DID="did:plc:nbyzym7vdf3czj7rn3tt5vtq"
+  FEEDGEN_SUBSCRIPTION_RECONNECT_DELAY=3000
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[mounts]
+  source = "data"
+  destination = "/data"
