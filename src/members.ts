@@ -2,6 +2,7 @@
 export const dids = [
   'did:plc:nbyzym7vdf3czj7rn3tt5vtq', // h3y6e.bsky.social
   'did:plc:7bvahjql6l763yinlxmub4dm', // h3y6e.com
+  'did:plc:pqtekhioh3jwwhjpca6jros5', // heyhoe.bsky.social
   'did:plc:6a6jvn3t5oilrrvwuaqb6yda',
   'did:plc:mqi5bt2io5ia4voqmx7rtr2j',
   'did:plc:eiiv4ubggcl5rjyyezca67zo',
