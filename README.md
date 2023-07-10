@@ -1,7 +1,7 @@
 # ATProto Feed Generator
 
 [![Fly Deploy](https://github.com/h3y6e/feed-generator/actions/workflows/deploy.yaml/badge.svg)](https://github.com/h3y6e/feed-generator/actions/workflows/deploy.yaml)
-[![camphor-members](https://img.shields.io/badge/camphor--members-feed-blue)](https://feed-generator.fly.dev/xrpc/app.bsky.feed.getFeedSkeleton%253Ffeed=at://did:plc:nbyzym7vdf3czj7rn3tt5vtq/app.bsky.feed.generator/camphor-members)
+[![camphor-members](https://img.shields.io/badge/camphor--members-feed-blue)](https://feed-generator.fly.dev/xrpc/app.bsky.feed.getFeedSkeleton?feed=at://did:plc:nbyzym7vdf3czj7rn3tt5vtq/app.bsky.feed.generator/camphor-members)
 
 Edit `src/members.ts` to change the users that appear in the feed.
 
